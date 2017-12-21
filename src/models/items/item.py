@@ -11,15 +11,15 @@ class Item(object):
         self.name = name
         self.url = url
         store = Store.find_by_url(url)
-        tag_name = store.tag_name()
-        query = store.query()
+        tag_name = store.tag_name
+        query = store.query
         self.price = self.load_price(tag_name, query)
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def __repr__(self):
         return "<Item {} with URL {}>".format(self.name, self.url)
 
-    def load_item(self, tag_name, query):
+    def load_price(self, tag_name, query):
         request = requests.get(self.url)
         content = request.content
         soup = BeautifulSoup(content, "html.parser")
